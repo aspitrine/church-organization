@@ -1,0 +1,34 @@
+{
+  "name": "church-organization-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Logie Quentin",
+  "license": "MIT",
+  "scripts": {
+    "babel-node": "babel-node --presets=latest",
+    "start": "nodemon --exec npm run babel-node -- ./src/index.js",
+    "sample": "npm run babel-node -- ./src/tools/initialization.js"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "http": "^0.0.0",
+    "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.4",
+    "method-override": "^2.3.10",
+    "pg": "^7.3.0",
+    "sequelize": "^4.17.0"
+  }
+}
