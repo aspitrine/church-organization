@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
+import {checkLogged} from '../tools/access';
 import config from '../config/config.json';
 import jwt from 'jsonwebtoken';
 import restify from '../tools/rest';
@@ -29,7 +30,8 @@ module.exports = (router, models) => {
 
   restify(router, models.User, '/api/users', {
     preCreate: [generatePasswordHashFromRequest, testUniqueUsername],
-    preUpdate: [generatePasswordHashFromRequest, testUniqueUsername]
+    preUpdate: [generatePasswordHashFromRequest, testUniqueUsername],
+    preMiddleware: [checkLogged]
   });
 
   router.post('/api/authenticate', async (req, res) => {

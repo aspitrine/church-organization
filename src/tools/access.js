@@ -16,3 +16,9 @@ export const setDecodedToken = (req, res, next) => {
     next();
   }
 };
+
+export const checkLogged = (req, res) => {
+  if(!req.decoded) {
+    res.status(401).send({ result: 'Unauthorized', status: 'error' });
+  }
+};
