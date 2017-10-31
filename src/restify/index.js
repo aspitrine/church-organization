@@ -16,7 +16,6 @@ export default (router, model, route, options) => {
   const ops = operator(model);
 
   const output = (req, res) => {
-    console.log(req);
     res.status(req.erm.statusCode).send(req.erm.result);
   };
 
