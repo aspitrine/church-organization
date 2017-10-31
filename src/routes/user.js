@@ -3,16 +3,17 @@ import bcrypt from 'bcrypt';
 import {checkLogged} from '../tools/access';
 import config from '../config/config.json';
 import jwt from 'jsonwebtoken';
-import restify from '../tools/rest';
+import restify from '../restify';
 
 module.exports = (router, models) => {
-  const generatePasswordHashFromRequest = (req, res) => {
+  const generatePasswordHashFromRequest = (req, res, next) => {
     if(req.body.password) {
       req.body.password = bcrypt.hashSync(req.body.password, config.saltRounds);
     }
+    next();
   };
 
-  const testUniqueUsername = async (req, res) => {
+  const testUniqueUsername = async (req, res, next) => {
     const Op = models.Sequelize.Op;
     const request = {
       where: {
@@ -25,6 +26,8 @@ module.exports = (router, models) => {
     const user = await models.User.findOne(request);
     if(user) {
       res.status(403).send({status: 'error', result: 'Ce nom d\'utilisateur existe déjà'});
+    } else {
+      next();
     }
   };
 

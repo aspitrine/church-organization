@@ -17,8 +17,17 @@ export const setDecodedToken = (req, res, next) => {
   }
 };
 
-export const checkLogged = (req, res) => {
+export const checkLogged = (req, res, next) => {
   if(!req.decoded) {
     res.status(401).send({ result: 'Unauthorized', status: 'error' });
+  } else {
+    next();
   }
+};
+
+export const checkLoggedByAdmin = (req, res) => {
+  console.log(req.decoded);
+  // if(!req.decoded) {
+  //   res.status(401).send({ result: 'Unauthorized', status: 'error' });
+  // }
 };

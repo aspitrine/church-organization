@@ -6,15 +6,33 @@ module.exports = async (models) => {
     name: 'Admin'
   });
 
+  const managerProfil = await models.Profil.create({
+    name: 'Manager'
+  });
+
   const userProfil = await models.Profil.create({
     name: 'User'
   });
 
-  await models.User.create({
+  const users = [{
     username: 'qle',
     password: bcrypt.hashSync('admin', config.saltRounds),
-    email: 'loquente62@gmail.com',
+    email: 'admin@yopmail.com',
     phone: '0662132076',
     profilId: adminProfil.dataValues.id
-  });
+  }, {
+    username: 'manager',
+    password: bcrypt.hashSync('manager', config.saltRounds),
+    email: 'manager@yopmail.com',
+    phone: '0662132076',
+    profilId: managerProfil.dataValues.id
+  }, {
+    username: 'user',
+    password: bcrypt.hashSync('user', config.saltRounds),
+    email: 'user@yopmail.com',
+    phone: '0662132076',
+    profilId: userProfil.dataValues.id
+  }];
+
+  await Promise.all(users.map((u) => models.User.create(u)));
 };
