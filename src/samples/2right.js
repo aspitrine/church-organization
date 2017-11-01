@@ -1,13 +1,13 @@
 module.exports = async (models) => {
-  const adminProfil = await models.Profil.findOne({
+  const adminProfil = await models.Profil.findOne({where: {
     name: 'Admin'
-  });
-  const managerProfil = await models.Profil.findOne({
+  }});
+  const managerProfil = await models.Profil.findOne({where: {
     name: 'Manager'
-  });
-  const userProfil = await models.Profil.findOne({
+  }});
+  const userProfil = await models.Profil.findOne({where: {
     name: 'User'
-  });
+  }});
 
   // User
   await models.Right.create({

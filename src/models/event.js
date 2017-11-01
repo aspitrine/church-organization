@@ -3,11 +3,14 @@ export default (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    endDate: DataTypes.DATE,
+    isPublic: DataTypes.BOOLEAN
   });
 
   Event.associate = (models) => {
     Event.belongsTo(models.Room, {as: 'room'});
+    Event.belongsTo(models.Church, {as: 'church'});
+    Event.belongsToMany(models.Team, {as: 'team', through: 'EventTeam'});
   };
 
   return Event;
