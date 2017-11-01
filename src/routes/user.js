@@ -52,7 +52,8 @@ module.exports = (router, models) => {
 
       const token = jwt.sign({
         id: user.dataValues.id,
-        profilId: _.get(user, 'dataValues.profilId')
+        profilId: _.get(user, 'dataValues.profilId'),
+        churchId: _.get(user, 'dataValues.churchId')
       }, config.secret, {
         expiresIn: '7d'
       });

@@ -8,6 +8,7 @@ export default (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.belongsTo(models.Profil, {as: 'profil'});
+    User.belongsTo(models.Church, {as: 'church'});
   };
 
   return User;

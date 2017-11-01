@@ -5,7 +5,8 @@ export default (sequelize, DataTypes) => {
     update: DataTypes.BOOLEAN,
     remove: DataTypes.BOOLEAN,
     menu: DataTypes.BOOLEAN,
-    adminMenu: DataTypes.BOOLEAN
+    adminMenu: DataTypes.BOOLEAN,
+    objectName: DataTypes.STRING
   });
 
   Right.associate = (models) => {

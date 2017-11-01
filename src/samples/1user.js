@@ -14,24 +14,29 @@ module.exports = async (models) => {
     name: 'User'
   });
 
+  const church = await models.Church.findOne({where: {name: 'EPE Douai'}});
+
   const users = [{
     username: 'qle',
     password: bcrypt.hashSync('admin', config.saltRounds),
     email: 'admin@yopmail.com',
     phone: '0662132076',
-    profilId: adminProfil.dataValues.id
+    profilId: adminProfil.dataValues.id,
+    churchId: church.dataValues.id
   }, {
     username: 'manager',
     password: bcrypt.hashSync('manager', config.saltRounds),
     email: 'manager@yopmail.com',
     phone: '0662132076',
-    profilId: managerProfil.dataValues.id
+    profilId: managerProfil.dataValues.id,
+    churchId: church.dataValues.id
   }, {
     username: 'user',
     password: bcrypt.hashSync('user', config.saltRounds),
     email: 'user@yopmail.com',
     phone: '0662132076',
-    profilId: userProfil.dataValues.id
+    profilId: userProfil.dataValues.id,
+    churchId: church.dataValues.id
   }];
 
   await Promise.all(users.map((u) => models.User.create(u)));
