@@ -7,9 +7,9 @@ export default (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.belongsTo(models.Profil, {as: 'profil'});
-    User.belongsTo(models.Church, {as: 'church'});
-    User.belongsToMany(models.Team, {through: 'UserTeam'});
+    User.Profil = User.belongsTo(models.Profil, {as: 'profil'});
+    User.Church = User.belongsTo(models.Church, {as: 'church'});
+    User.Team = User.belongsToMany(models.Team, {through: 'UserTeam'});
   };
 
   return User;

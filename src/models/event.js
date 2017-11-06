@@ -8,9 +8,9 @@ export default (sequelize, DataTypes) => {
   });
 
   Event.associate = (models) => {
-    Event.belongsTo(models.Room, {as: 'room'});
-    Event.belongsTo(models.Church, {as: 'church'});
-    Event.belongsToMany(models.Team, {as: 'team', through: 'EventTeam'});
+    Event.Room = Event.belongsTo(models.Room, {as: 'room'});
+    Event.Church = Event.belongsTo(models.Church, {as: 'church'});
+    Event.Team = Event.belongsToMany(models.Team, {as: 'team', through: 'EventTeam'});
   };
 
   return Event;

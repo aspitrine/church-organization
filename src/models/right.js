@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
   });
 
   Right.associate = (models) => {
-    Right.belongsTo(models.Profil, {as: 'profil'});
+    Right.Profil = Right.belongsTo(models.Profil, {as: 'profil'});
   };
 
   return Right;

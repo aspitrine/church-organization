@@ -1,4 +1,4 @@
-export default (model) => {
+export default (models, modelName) => {
   const findAll = async (req, res, next) => {
     try {
       const query = req.query ? req.query : {};
@@ -8,7 +8,14 @@ export default (model) => {
         Object.assign({}, query.where, queryFilter) :
         queryFilter;
 
-      const result = await model.findAll(query);
+      if(query.include) {
+        query.include = query.include.map(m => ({
+          model: models[m],
+          as: m.toLowerCase()
+        }));
+      }
+
+      const result = await models[modelName].findAll(query);
 
       req.erm = {
         result: {result: result, status: 'success'},
@@ -31,11 +38,18 @@ export default (model) => {
       const query = req.query ? req.query : {};
       const queryFilter = req.queryFilter ? req.queryFilter : {};
 
+      if(query.include) {
+        query.include = query.include.map(m => ({
+          model: models[m],
+          as: m.toLowerCase()
+        }));
+      }
+
       query.where = query.where ?
         Object.assign({}, query.where, queryFilter, {id: req.params.id}) :
         Object.assign({}, queryFilter, {id: req.params.id});
 
-      const result = await model.findOne(query);
+      const result = await models[modelName].findOne(query);
       req.erm = {
         result: {result: result, status: 'success'},
         statusCode: 200
@@ -53,7 +67,7 @@ export default (model) => {
 
   const create = async (req, res, next) => {
     try {
-      const result = await model.create(req.body);
+      const result = await models[modelName].create(req.body);
       req.erm = {
         result: {result: result, status: 'success'},
         statusCode: 200
@@ -73,7 +87,7 @@ export default (model) => {
     try {
       const queryFilter = req.queryFilter ? req.queryFilter : {};
       const request = Object.assign({}, queryFilter, {id: req.params.id});
-      const result = await model.update(req.body, {where: request});
+      const result = await models[modelName].update(req.body, {where: request});
       req.erm = {
         result: {result: result, status: 'success'},
         statusCode: 200
@@ -93,7 +107,7 @@ export default (model) => {
     try {
       const queryFilter = req.queryFilter ? req.queryFilter : {};
       const request = Object.assign({}, queryFilter, {id: req.params.id});
-      const result = await model.destroy({where: request});
+      const result = await models[modelName].destroy({where: request});
       req.erm = {
         result: {result: result, status: 'success'},
         statusCode: 200

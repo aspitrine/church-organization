@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
   });
 
   Room.associate = (models) => {
-    Room.belongsTo(models.Church, {as: 'church'});
+    Room.Church = Room.belongsTo(models.Church, {as: 'church'});
   };
 
   return Room;

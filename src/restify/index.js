@@ -1,7 +1,7 @@
 import ensureArray from 'ensure-array';
 import operator from './operator';
 
-export default (router, model, route, options) => {
+export default (router, models, modelName, route, options) => {
   options.preRead = ensureArray(options.preRead);
   options.preCreate = ensureArray(options.preCreate);
   options.preUpdate = ensureArray(options.preUpdate);
@@ -13,7 +13,7 @@ export default (router, model, route, options) => {
   options.postDelete = ensureArray(options.postDelete);
   options.postMiddleware = ensureArray(options.postMiddleware);
 
-  const ops = operator(model);
+  const ops = operator(models, modelName);
 
   const output = (req, res) => {
     res.status(req.erm.statusCode).send(req.erm.result);

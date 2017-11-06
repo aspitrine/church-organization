@@ -3,7 +3,7 @@ import restify from '../restify';
 
 module.exports = (router, models) => {
 
-  restify(router, models.Event, '/api/events', {
+  restify(router, models, 'Event', '/api/events', {
     preRead: [filterOnChurch],
     preCreate: [addChurchInBody],
     preUpdate: [filterOnChurch, addChurchInBody],
