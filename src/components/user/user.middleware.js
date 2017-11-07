@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import config from '../../config/config.json';
 import jwt from 'jsonwebtoken';
 
-export const generatePasswordHashFromRequest = (req, res, next, models) => {
+export const generatePasswordHashFromRequest = (req, res, next) => {
   if(req.body.password) {
     req.body.password = bcrypt.hashSync(req.body.password, config.saltRounds);
   }
@@ -30,13 +30,11 @@ export const testUniqueUsername = async (req, res, next, models) => {
 
 export const authenticate = async (req, res, models) => {
   try {
-    console.log('plop');
     const user = await models.User.findOne({
       where: {
         username: req.body.username
       }
     });
-
 
     if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
       res.status(403).send({status: 'error', message: 'Authentification échoué'});

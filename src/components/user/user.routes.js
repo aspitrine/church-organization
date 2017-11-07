@@ -4,8 +4,14 @@ import restify from '../../restify';
 
 module.exports = (router, models) => {
   restify(router, models, 'User', '/api/users', {
-    preCreate: [generatePasswordHashFromRequest, testUniqueUsername],
-    preUpdate: [generatePasswordHashFromRequest, testUniqueUsername],
+    preCreate: [
+      generatePasswordHashFromRequest,
+      (req, res) => testUniqueUsername(req, res, models)
+    ],
+    preUpdate: [
+      generatePasswordHashFromRequest,
+      (req, res) => testUniqueUsername(req, res, models)
+    ],
     preMiddleware: [checkLogged]
   });
 
