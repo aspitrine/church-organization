@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import initDb from '../models';
+import initDb from '../tools/database';
 import config from '../config/config.json';
 import runSample from '../samples';
 

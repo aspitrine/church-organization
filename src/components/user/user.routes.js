@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
-import {checkLogged} from '../tools/access';
-import config from '../config/config.json';
+import {checkLogged} from '../../tools/access';
+import config from '../../config/config.json';
 import jwt from 'jsonwebtoken';
-import restify from '../restify';
+import restify from '../../restify';
 
 module.exports = (router, models) => {
   const generatePasswordHashFromRequest = (req, res, next) => {

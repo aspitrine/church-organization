@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
@@ -10,10 +11,16 @@ export default (sequelize) => {
 
   const db = {};
 
-  fs.readdirSync(__dirname).filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js');
-  }).forEach(function(file) {
-    const model = sequelize.import(path.join(__dirname, file));
+
+  const componentPath = path.join(__dirname, '../components/');
+  const folders = fs.readdirSync(componentPath).filter(folder => folder.indexOf('.') === -1);
+
+  const files = _.chain(folders).map(folder => {
+    return fs.readdirSync(path.join(componentPath, folder)).filter(file => file.indexOf('.model.js') !== -1).map(f => path.join(componentPath, folder, f));
+  }).flatten().value();
+
+  files.forEach(function(file) {
+    const model = sequelize.import(file);
     db[model.name] = model;
   });
 

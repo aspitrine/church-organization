@@ -1,5 +1,5 @@
-import {checkLogged, filterOnChurch, addChurchInBody} from '../tools/access';
-import restify from '../restify';
+import {checkLogged, filterOnChurch, addChurchInBody} from '../../tools/access';
+import restify from '../../restify';
 
 module.exports = (router, models) => {
   restify(router, models, 'Room', '/api/rooms', {

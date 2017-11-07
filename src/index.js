@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import methodOverride from 'method-override';
 import routerDynamic from './tools/router';
-import initDb from './models';
+import initDb from './tools/database';
 import { setDecodedToken } from './tools/access';
 
 const app = express();
