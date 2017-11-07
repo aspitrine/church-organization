@@ -6,11 +6,11 @@ module.exports = (router, models) => {
   restify(router, models, 'User', '/api/users', {
     preCreate: [
       generatePasswordHashFromRequest,
-      (req, res) => testUniqueUsername(req, res, models)
+      (req, res, next) => testUniqueUsername(req, res, next, models)
     ],
     preUpdate: [
       generatePasswordHashFromRequest,
-      (req, res) => testUniqueUsername(req, res, models)
+      (req, res, next) => testUniqueUsername(req, res, next, models)
     ],
     preMiddleware: [checkLogged]
   });
