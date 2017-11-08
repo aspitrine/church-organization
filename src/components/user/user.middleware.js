@@ -2,6 +2,9 @@ import _ from 'lodash';
 import bcrypt from 'bcrypt';
 import config from '../../config/config.json';
 import jwt from 'jsonwebtoken';
+import getModels from '../../tools/database.js';
+
+const models = getModels();
 
 export const generatePasswordHashFromRequest = (req, res, next) => {
   if(req.body.password) {
@@ -10,7 +13,7 @@ export const generatePasswordHashFromRequest = (req, res, next) => {
   next();
 };
 
-export const testUniqueUsername = async (req, res, next, models) => {
+export const testUniqueUsername = async (req, res, next) => {
   const Op = models.Sequelize.Op;
   const request = {
     where: {
@@ -28,7 +31,7 @@ export const testUniqueUsername = async (req, res, next, models) => {
   }
 };
 
-export const authenticate = async (req, res, models) => {
+export const authenticate = async (req, res) => {
   try {
     const user = await models.User.findOne({
       where: {
@@ -54,7 +57,7 @@ export const authenticate = async (req, res, models) => {
   }
 };
 
-export const refreshToken = async (req, res, models) => {
+export const refreshToken = async (req, res) => {
   if (req.decoded) {
     const payload = req.decoded;
     delete payload.iat;

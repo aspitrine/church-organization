@@ -1,4 +1,8 @@
-export default (models, modelName) => {
+import getModels from '../tools/database.js';
+
+const models = getModels();
+
+export default (modelName) => {
   const findAll = async (req, res, next) => {
     try {
       const query = req.query ? req.query : {};

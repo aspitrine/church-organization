@@ -3,15 +3,15 @@ import cors from 'cors';
 import express from 'express';
 import methodOverride from 'method-override';
 import routerDynamic from './tools/router';
-import initDb from './tools/database';
+import getModels from './tools/database';
 import { setDecodedToken } from './tools/access';
 
 const app = express();
 const port = 3000;
 const router = express.Router();
-const models = initDb();
+const models = getModels();
 /* Get all route in folder routes */
-routerDynamic(router, models);
+routerDynamic(router);
 
 app.use(methodOverride());
 /* Body parsers */

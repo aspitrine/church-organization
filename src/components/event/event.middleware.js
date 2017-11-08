@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import ensureArray from 'ensure-array';
+import getModels from '../../tools/database.js';
 
-export const manageTeams = async (req, res, models) => {
+const models = getModels();
+
+export const manageTeams = async (req, res) => {
   const churchId = _.get(req, 'decoded.payload.churchId');
   const request = {
     id: req.params.eventId,

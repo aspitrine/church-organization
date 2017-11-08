@@ -2,8 +2,8 @@ import {checkLogged, filterOnChurch, addChurchInBody} from '../../tools/access';
 import {mangeUsers} from './team.middleware';
 import restify from '../../restify';
 
-module.exports = (router, models) => {
-  restify(router, models, 'Team', '/api/teams', {
+module.exports = (router) => {
+  restify(router, 'Team', '/api/teams', {
     preRead: [filterOnChurch],
     preCreate: [addChurchInBody],
     preUpdate: [filterOnChurch, addChurchInBody],
@@ -11,8 +11,5 @@ module.exports = (router, models) => {
     preMiddleware: [checkLogged]
   });
 
-  router.post(
-    '/api/teams/:teamId/mangeUsers',
-    checkLogged,
-    (req, res) => mangeUsers(req, res, models));
+  router.post('/api/teams/:teamId/mangeUsers', checkLogged, mangeUsers);
 };

@@ -2,26 +2,14 @@ import {authenticate, refreshToken, generatePasswordHashFromRequest, testUniqueU
 import {checkLogged} from '../../tools/access';
 import restify from '../../restify';
 
-module.exports = (router, models) => {
-  restify(router, models, 'User', '/api/users', {
-    preCreate: [
-      generatePasswordHashFromRequest,
-      (req, res, next) => testUniqueUsername(req, res, next, models)
-    ],
-    preUpdate: [
-      generatePasswordHashFromRequest,
-      (req, res, next) => testUniqueUsername(req, res, next, models)
-    ],
+module.exports = (router) => {
+  restify(router, 'User', '/api/users', {
+    preCreate: [generatePasswordHashFromRequest, testUniqueUsername],
+    preUpdate: [generatePasswordHashFromRequest, testUniqueUsername],
     preMiddleware: [checkLogged]
   });
 
-  router.post(
-    '/api/authenticate',
-    (req, res) => authenticate(req, res, models)
-  );
+  router.post('/api/authenticate', authenticate);
 
-  router.post(
-    '/api/refreshToken',
-    (req, res) => refreshToken(req, res, models)
-  );
+  router.post('/api/refreshToken', refreshToken);
 };
